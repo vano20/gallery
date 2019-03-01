@@ -11,12 +11,13 @@
 
             <?php 
 
+            $result_user = User::find_user_by_id(1);
 
-            $sql = "SELECT * FROM users WHERE usr_id = 1";
-            $result = $database->query_db($sql);
-            $user_found = mysqli_fetch_array($result);
+            // foreach ($result_user as $user) {
+            //     echo $user->usr_username;
+            // }
 
-            echo $user_found['usr_username'];
+            echo $result_user->usr_username;
 
             ?>
 
