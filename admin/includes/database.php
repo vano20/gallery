@@ -34,17 +34,19 @@ class Database {
 			$result_query = $this->mysql_ob->query($str_query);
 		} else die("System fatal error: Please contact administrator !");
 		
+		$this->confirm_query($result_query);
+
 		return $result_query;
 	}
 
 	private function confirm_query($result) {
 
 		//check mysqli_query return value
-		if(!$result) die("Query error: " . $this->mysql_ob->connect_error);
+		if(!$result) die("Query error: " . $this->mysql_ob->error);
 	}
 
 	//function untuk escaping query str
-	private function escape_string_query($str_query) {
+	public function escape_string_query($str_query) {
 
 		return $this->mysql_ob->real_escape_string($str_query);
 	}

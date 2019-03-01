@@ -1,4 +1,10 @@
 <?php include("includes/header.php"); ?>
+<?php 
+
+//check if logged in, if not, redirect to Login.php
+if(!$session->is_login()) redirect("login.php");
+
+?>
 
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

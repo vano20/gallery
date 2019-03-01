@@ -1,13 +1,19 @@
 <?php 
 
-function __autoload($class) {
+function classAutoLoader($class) {
 
 	$class = strtolower($class);
 
 	$path = "includes/{$class}.php";
 
-	file_exists($pathsss) ? require_once($path) : die("{$class}.php not found !");
+	is_file($path) && !class_exists($class) ? require_once($path) : die("{$class}.php not found !");
 }
 
+spl_autoload_register('classAutoLoader');
+
+//redirect function
+function redirect($url) {
+	header("Location: {$url}");
+}
 
 ?>

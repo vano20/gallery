@@ -37,6 +37,23 @@ class User {
 		return $ob_array;
 	}
 
+	//verify login detail from table user
+	public static function verify_user($username, $password) {
+		global $database;
+
+		$usr_username = $database->escape_string_query($username);
+		$usr_password = $database->escape_string_query($password);
+
+		$sql = "SELECT * FROM users";
+		$add_where = " WHERE usr_username = '{$usr_username}' AND usr_password = '{$usr_password}'";
+		$filters = " LIMIT 1";
+
+		$array_result = self::find_this_query($sql . $add_where . $filters);
+
+		return !empty($array_result) ? array_shift($array_result) : false;
+
+	}
+
 	public static function instance($data) {
 		
 		$user_ob = new self;
@@ -58,7 +75,7 @@ class User {
 
 		//checking whether the key existed in the array/object given
 		return array_key_exists($string, $ob_prop);
-	} 
+	}
 
 }
 
