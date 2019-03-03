@@ -52,7 +52,7 @@ class Database {
 	}
 
 	public function inserted_id() {
-		return $this->conenction->insert_id;
+		return $this->mysql_ob->insert_id;
 	}
 } //End of Database class
 

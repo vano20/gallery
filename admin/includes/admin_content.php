@@ -9,15 +9,23 @@
             </h1>
 
 
-            <?php 
+            <?php
 
-            $result_user = User::find_user_by_id(1);
+            // $user_ob = new User();
 
-            // foreach ($result_user as $user) {
-            //     echo $user->usr_username;
-            // }
+            // $user_ob->usr_username  = "random user";
+            // $user_ob->usr_password  = "get rekt";
+            // $user_ob->usr_firstname = "lel";
+            // $user_ob->usr_lastname  = "twitch";
 
-            echo $result_user->usr_username;
+            // $user_ob->create();
+
+            $user = User::find_user_by_id(3);
+
+            // $user->usr_username  = "KABOOM";
+
+            $user->delete();
+
 
             ?>
 

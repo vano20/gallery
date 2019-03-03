@@ -77,6 +77,55 @@ class User {
 		return array_key_exists($string, $ob_prop);
 	}
 
-}
+	public function create() {
+		global $database;
+
+		$insert_query = "INSERT INTO users (usr_username, usr_password, usr_firstname, usr_lastname) ";
+		$insert_query .= "VALUES ('" . $database->escape_string_query($this->usr_username) . "', '";
+		$insert_query .=  $database->escape_string_query($this->usr_password) . "', '";
+		$insert_query .=  $database->escape_string_query($this->usr_firstname) . "', '";
+		$insert_query .=  $database->escape_string_query($this->usr_lastname) . "')";
+
+		if($database->query_db($insert_query)) {
+
+			$this->usr_id = $database->inserted_id();
+			return true;
+
+		} else {
+
+			return false;
+
+		}
+	} //End of create method
+
+	public function update() {
+		global $database;
+
+		$update_query = "UPDATE users SET ";
+		$update_query .= "usr_username = '" . $database->escape_string_query($this->usr_username) . "', ";
+		$update_query .=  "usr_password = '" . $database->escape_string_query($this->usr_password) . "', ";
+		$update_query .=  "usr_firstname = '" . $database->escape_string_query($this->usr_firstname) . "', ";
+		$update_query .=  "usr_lastname = '" . $database->escape_string_query($this->usr_lastname) . "'";
+		$update_query .=  " WHERE usr_id = " . $database->escape_string_query($this->usr_id);
+
+		$database->query_db($update_query);
+
+		return $database->mysql_ob->affected_rows == 1 ? true : false;
+
+	} // End of Update method
+
+	public function delete() {
+		global $database;
+
+		$delete_query = "DELETE FROM users WHERE usr_id = " . $database->escape_string_query($this->usr_id);
+		$delete_query .= " LIMIT 1";
+
+		$database->query_db($delete_query);
+
+		return $database->mysql_ob->affected_rows == 1 ? true : false;
+		
+	}
+
+} //End of User class
 
 ?>
