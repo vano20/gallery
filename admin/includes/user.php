@@ -92,6 +92,19 @@ class User {
 
 	}
 
+	protected function clean_properties() {
+		global $database;
+
+		$clean_properties = array();
+
+		foreach ($this->properties() as $key => $value) {
+			
+			$clean_properties[$key] = $database->escape_string_query($value);
+		}
+
+		return $clean_properties;
+	}
+
 	public function save() {
 
 		return isset($this->usr_id) ? $this->update() : $this->create();
@@ -100,7 +113,7 @@ class User {
 	public function create() {
 		global $database;
 
-		$properties = $this->properties();
+		$properties = $this->clean_properties();
 
 		$insert_query = "INSERT INTO " . self::$db_table . " (" . implode(", ", array_keys($properties)) .")";
 		$insert_query .= " VALUES ('" . implode("', '", array_values($properties)) . "')";
@@ -120,11 +133,16 @@ class User {
 	public function update() {
 		global $database;
 
+		$properties = $this->clean_properties();
+
+		$pairs = array();
+
+		foreach ($properties as $key => $value) {
+			$pairs[] = "{$key} = '{$value}'";
+		}
+
 		$update_query = "UPDATE " . self::$db_table . " SET ";
-		$update_query .= "usr_username = '" . $database->escape_string_query($this->usr_username) . "', ";
-		$update_query .=  "usr_password = '" . $database->escape_string_query($this->usr_password) . "', ";
-		$update_query .=  "usr_firstname = '" . $database->escape_string_query($this->usr_firstname) . "', ";
-		$update_query .=  "usr_lastname = '" . $database->escape_string_query($this->usr_lastname) . "'";
+		$update_query .= implode(", ", $pairs);
 		$update_query .=  " WHERE usr_id = " . $database->escape_string_query($this->usr_id);
 
 		$database->query_db($update_query);

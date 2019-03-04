@@ -11,20 +11,26 @@
 
             <?php
 
-            // $user_ob = new User();
+            $user_ob = new User();
 
-            // // $user_ob->usr_username  = "random user";
-            // // $user_ob->usr_password  = "get rekt";
-            // // $user_ob->usr_firstname = "lel";
-            // // $user_ob->usr_lastname  = "twitch";
+            $user_ob->usr_username  = "Student";
+            $user_ob->usr_password  = "student_password";
+            $user_ob->usr_firstname = "The Student";
+            $user_ob->usr_lastname  = "Oldboy";
 
-            // // $user_ob->save();
+            echo $user_ob->save() ? "User created/updated." : "Failed";
 
-            $user = User::find_user_by_id(3);
+            // $user = User::find_user_by_id(5);
 
-            // $user->usr_username = "Gyahah";
+            // $user->usr_username = "pekom01";
+            // $user->usr_password = "BigBroKatakuri";
+            // $user->usr_firstname = "Pekom as";
+            // $user->usr_lastname = "Bigmom's pirates";
 
-            $user->delete();
+            // echo $user->save() ? "User created/updated." : "Failed";
+
+
+            // $user->delete();
 
 
             ?>
