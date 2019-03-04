@@ -2,6 +2,8 @@
 
 class User {
 
+	protected static $db_table = "users";
+	protected static $db_table_fields = array('usr_username','usr_password','usr_firstname','usr_lastname');
 	public $usr_id;
 	public $usr_username;
 	public $usr_password;
@@ -11,13 +13,13 @@ class User {
 	//query all from table users
 	public static function find_all_users() {
 		
-		return self::find_this_query("SELECT * FROM users");
+		return self::find_this_query("SELECT * FROM " . self::$db_table);
 	}
 
 	//query user by id
 	public static function find_user_by_id($pk_id) {
 
-		$array_result = self::find_this_query("SELECT * FROM users WHERE usr_id = $pk_id LIMIT 1");
+		$array_result = self::find_this_query("SELECT * FROM " . self::$db_table . " WHERE usr_id = $pk_id LIMIT 1");
 
 		return !empty($array_result) ? array_shift($array_result) : false;
 	}
@@ -44,7 +46,7 @@ class User {
 		$usr_username = $database->escape_string_query($username);
 		$usr_password = $database->escape_string_query($password);
 
-		$sql = "SELECT * FROM users";
+		$sql = "SELECT * FROM " . self::$db_table;
 		$add_where = " WHERE usr_username = '{$usr_username}' AND usr_password = '{$usr_password}'";
 		$filters = " LIMIT 1";
 
@@ -77,14 +79,31 @@ class User {
 		return array_key_exists($string, $ob_prop);
 	}
 
+	protected function properties() {
+		$properties = array();
+
+		foreach (self::$db_table_fields as $key => $value) {
+			if (property_exists($this, $value)) {
+				$properties[$value] = $this->$value;
+			}
+		}
+
+		return $properties;
+
+	}
+
+	public function save() {
+
+		return isset($this->usr_id) ? $this->update() : $this->create();
+	}
+
 	public function create() {
 		global $database;
 
-		$insert_query = "INSERT INTO users (usr_username, usr_password, usr_firstname, usr_lastname) ";
-		$insert_query .= "VALUES ('" . $database->escape_string_query($this->usr_username) . "', '";
-		$insert_query .=  $database->escape_string_query($this->usr_password) . "', '";
-		$insert_query .=  $database->escape_string_query($this->usr_firstname) . "', '";
-		$insert_query .=  $database->escape_string_query($this->usr_lastname) . "')";
+		$properties = $this->properties();
+
+		$insert_query = "INSERT INTO " . self::$db_table . " (" . implode(", ", array_keys($properties)) .")";
+		$insert_query .= " VALUES ('" . implode("', '", array_values($properties)) . "')";
 
 		if($database->query_db($insert_query)) {
 
@@ -101,7 +120,7 @@ class User {
 	public function update() {
 		global $database;
 
-		$update_query = "UPDATE users SET ";
+		$update_query = "UPDATE " . self::$db_table . " SET ";
 		$update_query .= "usr_username = '" . $database->escape_string_query($this->usr_username) . "', ";
 		$update_query .=  "usr_password = '" . $database->escape_string_query($this->usr_password) . "', ";
 		$update_query .=  "usr_firstname = '" . $database->escape_string_query($this->usr_firstname) . "', ";
@@ -117,7 +136,7 @@ class User {
 	public function delete() {
 		global $database;
 
-		$delete_query = "DELETE FROM users WHERE usr_id = " . $database->escape_string_query($this->usr_id);
+		$delete_query = "DELETE FROM " . self::$db_table . " WHERE usr_id = " . $database->escape_string_query($this->usr_id);
 		$delete_query .= " LIMIT 1";
 
 		$database->query_db($delete_query);

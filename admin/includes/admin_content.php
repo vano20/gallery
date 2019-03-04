@@ -13,16 +13,16 @@
 
             // $user_ob = new User();
 
-            // $user_ob->usr_username  = "random user";
-            // $user_ob->usr_password  = "get rekt";
-            // $user_ob->usr_firstname = "lel";
-            // $user_ob->usr_lastname  = "twitch";
+            // // $user_ob->usr_username  = "random user";
+            // // $user_ob->usr_password  = "get rekt";
+            // // $user_ob->usr_firstname = "lel";
+            // // $user_ob->usr_lastname  = "twitch";
 
-            // $user_ob->create();
+            // // $user_ob->save();
 
             $user = User::find_user_by_id(3);
 
-            // $user->usr_username  = "KABOOM";
+            // $user->usr_username = "Gyahah";
 
             $user->delete();
 
