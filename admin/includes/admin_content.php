@@ -11,16 +11,17 @@
 
             <?php
 
-            $user_ob = new User();
+            $add_photo = new Photo();
 
-            $user_ob->usr_username  = "Student";
-            $user_ob->usr_password  = "student_password";
-            $user_ob->usr_firstname = "The Student";
-            $user_ob->usr_lastname  = "Oldboy";
+            $add_photo->pht_title = "test title";
+            $add_photo->pht_description = "desc";
+            $add_photo->pht_filename = "gogo.png";
+            $add_photo->pht_type = "image";
+            $add_photo->pht_size = "5000";
 
-            echo $user_ob->save() ? "User created/updated." : "Failed";
+            echo $add_photo->save() ? "User created/updated." : "Failed";
 
-            // $user = User::find_user_by_id(5);
+            // $photos = Photo::find_all();
 
             // $user->usr_username = "pekom01";
             // $user->usr_password = "BigBroKatakuri";
@@ -29,9 +30,11 @@
 
             // echo $user->save() ? "User created/updated." : "Failed";
 
+            // foreach ($photos as $key => $value) {
+                
+            //     echo $value->pht_title . "<br>";
 
-            // $user->delete();
-
+            // }
 
             ?>
 
