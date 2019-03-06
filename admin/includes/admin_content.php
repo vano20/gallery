@@ -11,15 +11,15 @@
 
             <?php
 
-            $add_photo = new Photo();
+            // $add_photo = new Photo();
 
-            $add_photo->pht_title = "test title";
-            $add_photo->pht_description = "desc";
-            $add_photo->pht_filename = "gogo.png";
-            $add_photo->pht_type = "image";
-            $add_photo->pht_size = "5000";
+            // $add_photo->pht_title = "test title";
+            // $add_photo->pht_description = "desc";
+            // $add_photo->pht_filename = "gogo.png";
+            // $add_photo->pht_type = "image";
+            // $add_photo->pht_size = "5000";
 
-            echo $add_photo->save() ? "User created/updated." : "Failed";
+            // echo $add_photo->save() ? "User created/updated." : "Failed";
 
             // $photos = Photo::find_all();
 
@@ -35,6 +35,8 @@
             //     echo $value->pht_title . "<br>";
 
             // }
+
+            // echo INC_PATH;
 
             ?>
 
