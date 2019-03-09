@@ -58,6 +58,11 @@ class Photo extends Db_object {
 
 	}
 
+	public function file_path() {
+		
+		return $this->upload_dir . DS . $this->pht_filename;
+	}
+
 
 	//saving to DB and move uploaded file to specific dir
 	public function save() {

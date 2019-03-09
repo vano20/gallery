@@ -1,5 +1,15 @@
 <?php include("includes/header.php"); ?>
 
+<?php if(!$session->is_login()) redirect("login.php"); ?>
+
+<?php 
+
+
+$photo = Photo::find_all();
+
+
+?>
+
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -30,14 +40,39 @@
                             Photos
                             <small>Subheading</small>
                         </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-file"></i> Blank Page
-                            </li>
-                        </ol>
+                        
+                        <div class="col-md-12">
+                        
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Id</th>
+                                        <th>File name</th>
+                                        <th>Title</th>
+                                        <th>Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($photo as $v) : ?>
+                                    <tr>
+                                        <td><img src="<?php echo $v->file_path(); ?>" alt="">
+                                            <div class="pic_link">
+                                                <a href="delete_photo.php/?id=<?php echo $v->pht_id; ?>">Delete</a>
+                                                <a href="#">Edit</a>
+                                                <a href="#">View</a>
+                                            </div>
+                                        </td>
+                                        <td><?php echo $v->pht_id; ?></td>
+                                        <td><?php echo $v->pht_filename; ?></td>
+                                        <td><?php echo $v->pht_title; ?></td>
+                                        <td><?php echo $v->pht_size; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>    
+                        
+                        </div>
                     </div>
                 </div>
                 <!-- /.row -->

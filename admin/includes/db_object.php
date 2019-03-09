@@ -91,7 +91,7 @@ class Db_object {
 
 	public function save() {
 
-		return isset($this->usr_id) ? $this->update() : $this->create();
+		return isset($this->$pk_id) ? $this->update() : $this->create();
 	}
 
 	public function create() {
@@ -104,7 +104,7 @@ class Db_object {
 
 		if($database->query_db($insert_query)) {
 
-			$this->usr_id = $database->inserted_id();
+			$this->$pk_id = $database->inserted_id();
 			return true;
 
 		} else {
@@ -127,7 +127,7 @@ class Db_object {
 
 		$update_query = "UPDATE " . static::$db_table . " SET ";
 		$update_query .= implode(", ", $pairs);
-		$update_query .=  " WHERE ". static::$pk_field . " = " . $database->escape_string_query($this->usr_id);
+		$update_query .=  " WHERE ". static::$pk_field . " = " . $database->escape_string_query($this->$pk_id);
 
 		$database->query_db($update_query);
 
@@ -138,7 +138,7 @@ class Db_object {
 	public function delete() {
 		global $database;
 
-		$delete_query = "DELETE FROM " . static::$db_table . " WHERE " . static::$pk_field ." = " . $database->escape_string_query($this->usr_id);
+		$delete_query = "DELETE FROM " . static::$db_table . " WHERE " . static::$pk_field ." = " . $database->escape_string_query($this->$pk_id);
 		$delete_query .= " LIMIT 1";
 
 		$database->query_db($delete_query);
