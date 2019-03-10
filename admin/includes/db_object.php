@@ -5,7 +5,6 @@
  */
 class Db_object {
 
-
 	
 	//query all from table users
 	public static function find_all() {
@@ -91,11 +90,14 @@ class Db_object {
 
 	public function save() {
 
-		return isset($this->$pk_id) ? $this->update() : $this->create();
+		$pk_string = static::$pk_field;
+
+		return isset($this->$pk_string) ? $this->update() : $this->create();
 	}
 
 	public function create() {
 		global $database;
+		$pk_string = static::$pk_field;
 
 		$properties = $this->clean_properties();
 
@@ -104,7 +106,7 @@ class Db_object {
 
 		if($database->query_db($insert_query)) {
 
-			$this->$pk_id = $database->inserted_id();
+			$this->$pk_string = $database->inserted_id();
 			return true;
 
 		} else {
@@ -117,6 +119,8 @@ class Db_object {
 	public function update() {
 		global $database;
 
+		$pk_string = static::$pk_field;
+
 		$properties = $this->clean_properties();
 
 		$pairs = array();
@@ -127,7 +131,7 @@ class Db_object {
 
 		$update_query = "UPDATE " . static::$db_table . " SET ";
 		$update_query .= implode(", ", $pairs);
-		$update_query .=  " WHERE ". static::$pk_field . " = " . $database->escape_string_query($this->$pk_id);
+		$update_query .=  " WHERE ". static::$pk_field . " = " . $database->escape_string_query($this->$pk_string);
 
 		$database->query_db($update_query);
 
@@ -138,7 +142,9 @@ class Db_object {
 	public function delete() {
 		global $database;
 
-		$delete_query = "DELETE FROM " . static::$db_table . " WHERE " . static::$pk_field ." = " . $database->escape_string_query($this->$pk_id);
+		$pk_string = static::$pk_field;
+
+		$delete_query = "DELETE FROM " . static::$db_table . " WHERE " . static::$pk_field ." = " . $database->escape_string_query($this->$pk_string);
 		$delete_query .= " LIMIT 1";
 
 		$database->query_db($delete_query);

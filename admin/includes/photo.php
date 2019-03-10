@@ -6,11 +6,13 @@
 class Photo extends Db_object {
 	
 	protected static $db_table = "photos";
-	protected static $db_table_fields = array('pht_title','pht_description','pht_filename','pht_type','pht_size');
+	protected static $db_table_fields = array('pht_title','pht_description','pht_filename','pht_type','pht_size','pht_caption','pht_alternatetext');
 	protected static $pk_field = "pht_id";
 
 	public $pht_id;
 	public $pht_title;
+	public $pht_caption;
+	public $pht_alternatetext;
 	public $pht_description;
 	public $pht_filename;
 	public $pht_type;
@@ -59,7 +61,7 @@ class Photo extends Db_object {
 	}
 
 	public function file_path() {
-		
+
 		return $this->upload_dir . DS . $this->pht_filename;
 	}
 
@@ -107,6 +109,17 @@ class Photo extends Db_object {
 			}
 
 		}
+	} //End of save func
+
+	public function delete_photo() {
+
+		if($this->delete()) {
+
+			$target_path = SITE_ROOT . DS . 'admin' . DS . $this->file_path();
+
+			return unlink($target_path) ? true : false;
+		} else 
+			return false;
 	}
 	
 }

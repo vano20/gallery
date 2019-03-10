@@ -1,5 +1,15 @@
 <?php include("includes/header.php"); ?>
 
+<?php if(!$session->is_login()) redirect("login.php"); ?>
+
+<?php 
+
+
+$user = User::find_all();
+
+
+?>
+
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -28,16 +38,45 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Users
-                            <small>Subheading</small>
+                            
                         </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-file"></i> Blank Page
-                            </li>
-                        </ol>
+
+                        <a href="add_user.php" class="btn btn-primary">Add User</a>
+                        
+                        <div class="col-md-12">
+                        
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Photo</th>
+                                        <th>Username</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($user as $v) : ?>
+                                    <tr>
+                                        <td><?php echo $v->usr_id; ?></td>
+                                        <td><img class="admin-photo-thumbnail user-image" src="<?php echo $v->image_path_placehold(); ?>" alt="">
+                                        </td>
+                                        <td><?php echo $v->usr_username; ?>
+                                            <div class="pic_link">
+                                                <a href="delete_user.php?id=<?php echo $v->usr_id; ?>">Delete</a>
+                                                <a href="edit_user.php?id=<?php echo $v->usr_id; ?>">Edit</a>
+                                                <a href="#">View</a>
+                                            </div>
+
+                                        </td>
+                                        <td><?php echo $v->usr_firstname; ?></td>
+                                        <td><?php echo $v->usr_lastname; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>    
+                        
+                        </div>
                     </div>
                 </div>
                 <!-- /.row -->

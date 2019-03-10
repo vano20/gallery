@@ -11,6 +11,7 @@
 
             <?php
 
+            // $user = new User();
             // $add_photo = new Photo();
 
             // $add_photo->pht_title = "test title";
@@ -30,6 +31,12 @@
 
             // echo $user->save() ? "User created/updated." : "Failed";
 
+            // $user = User::find_all();
+
+            // echo $user[1]->usr_username;
+
+            // print_r(get_object_vars($photo));
+
             // foreach ($photos as $key => $value) {
                 
             //     echo $value->pht_title . "<br>";
@@ -37,6 +44,8 @@
             // }
 
             // echo INC_PATH;
+
+
 
             ?>
 

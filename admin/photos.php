@@ -56,10 +56,10 @@ $photo = Photo::find_all();
                                 <tbody>
                                     <?php foreach($photo as $v) : ?>
                                     <tr>
-                                        <td><img src="<?php echo $v->file_path(); ?>" alt="">
+                                        <td><img class="admin-photo-thumbnail" src="<?php echo $v->file_path(); ?>" alt="">
                                             <div class="pic_link">
-                                                <a href="delete_photo.php/?id=<?php echo $v->pht_id; ?>">Delete</a>
-                                                <a href="#">Edit</a>
+                                                <a href="delete_photo.php?id=<?php echo $v->pht_id; ?>">Delete</a>
+                                                <a href="edit_photo.php?id=<?php echo $v->pht_id; ?>">Edit</a>
                                                 <a href="#">View</a>
                                             </div>
                                         </td>
