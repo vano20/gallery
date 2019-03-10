@@ -65,7 +65,6 @@ $user = User::find_all();
                                             <div class="pic_link">
                                                 <a href="delete_user.php?id=<?php echo $v->usr_id; ?>">Delete</a>
                                                 <a href="edit_user.php?id=<?php echo $v->usr_id; ?>">Edit</a>
-                                                <a href="#">View</a>
                                             </div>
 
                                         </td>

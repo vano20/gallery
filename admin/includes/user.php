@@ -12,9 +12,49 @@ class User extends Db_object {
 	public $usr_firstname;
 	public $usr_lastname;
 	public $usr_pic;
+
+	public $tmp_path;
 	public $upload_dir = "images";
+
 	public $image_placeholder = "http://placehold.it/400x400&text=image";
 
+	public $errors = array();
+	public $upload_const_err = array(
+		UPLOAD_ERR_OK         => "There is no Error", 
+		UPLOAD_ERR_INI_SIZE   => "Uploaded file exceeds upload_max_filesize of php.ini",
+		UPLOAD_ERR_FORM_SIZE  => "Uploaded file exceeds more then ", //{$max_file_size}",
+		UPLOAD_ERR_PARTIAL    => "Uploaded file was only partialy upload",
+		UPLOAD_ERR_NO_FILE    => "No File was uploaded",
+		UPLOAD_ERR_NO_TMP_DIR => "Missing Temporary folder",
+		UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk",
+		UPLOAD_ERR_EXTENSION  => "a php extension stopped the upload process"
+	);
+
+
+	/**
+	*  Passing $_FILE['uploaded_file'] as an argument
+	*  $_FILE['uploaded_file'] == $file
+	**/
+	public function set_file($file) {
+
+		if(empty($file) || !$file || !is_array($file) || $file['error'] == 4) {
+
+			$this->errors[] = "There is no uploaded file here";
+			return false;
+
+		} elseif ($file['error'] = 0) {
+
+			$this->errors[] = $this->upload_const_err[$file['error']];
+			return false;
+
+		} else {
+
+			$this->usr_pic = basename($file['name']); //passing only filename without dir or ext
+			$this->tmp_path = $file['tmp_name'];
+
+		}
+
+	}
 
 	public function image_path_placehold() {
 
@@ -37,6 +77,51 @@ class User extends Db_object {
 		return !empty($array_result) ? array_shift($array_result) : false;
 
 	}
+
+	//saving to DB and move uploaded file to specific dir
+	public function save_user() {
+
+		if($this->usr_id) {
+
+			$this->update();
+
+		} else {
+
+			if(!empty($this->errors)) return false;
+
+			//check if file has been carefully uploaded
+			if(empty($this->usr_pic) || empty($this->tmp_path)) {
+				
+				$this->errors[] = "The file was not available";
+				return false;
+			}
+
+			$target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_dir . DS . $this->usr_pic;
+
+			//check if the file already existed
+			if (file_exists($target_path)) {
+
+				$this->errors[] = "The file {$this->usr_pic} already exists";
+				return false;
+			}
+
+			//moving file from tmp_path to target_path
+			if(move_uploaded_file($this->tmp_path, $target_path)) {
+
+				if($this->create()) {
+
+					unset($this->tmp_path);
+					return true;
+				}
+
+			} else {
+
+				$this->errors[] = "Permission could be denied";
+				return false;
+			}
+
+		}
+	} //End of save func
 
 } //End of User class
 
