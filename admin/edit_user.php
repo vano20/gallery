@@ -20,7 +20,17 @@ if(isset($_POST['update'])){
 
         $user->set_file($_FILES['usr_pic']);
 
-        $user->save_user();
+        if($user->usr_id){
+          
+          $user->save_user();
+          $user->update();
+
+        } else {
+
+          $user->save_user();
+          $user->create();
+
+        }
 
         redirect("edit_user.php?id={$user->usr_id}");
     }

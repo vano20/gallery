@@ -37,15 +37,22 @@ class User extends Db_object {
 	**/
 	public function set_file($file) {
 
-		if(empty($file) || !$file || !is_array($file) || $file['error'] == 4) {
+		if(empty($file) || !$file || !is_array($file)) {
 
 			$this->errors[] = "There is no uploaded file here";
 			return false;
 
-		} elseif ($file['error'] = 0) {
+		} elseif ($file['error'] != 0) {
 
-			$this->errors[] = $this->upload_const_err[$file['error']];
-			return false;
+			if($this->usr_id && $file['error'] != 4) {
+
+				$this->errors[] = $this->upload_const_err[$file['error']];
+				return false;
+			} else {
+				
+				$this->errors[] = $this->upload_const_err[$file['error']];
+				return false;
+			}
 
 		} else {
 
@@ -81,46 +88,36 @@ class User extends Db_object {
 	//saving to DB and move uploaded file to specific dir
 	public function save_user() {
 
-		if($this->usr_id) {
+		if(!empty($this->errors)) return false;
 
-			$this->update();
+		//check if file has been carefully uploaded
+		if(empty($this->usr_pic) || empty($this->tmp_path)) {
+			
+			$this->errors[] = "The file was not available";
+			return false;
+		}
+
+		$target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_dir . DS . $this->usr_pic;
+
+		//check if the file already existed
+		if (file_exists($target_path)) {
+
+			$this->errors[] = "The file {$this->usr_pic} already exists";
+			return false;
+		}
+
+		//moving file from tmp_path to target_path
+		if(move_uploaded_file($this->tmp_path, $target_path)) {
+
+			unset($this->tmp_path);
+			return true;
 
 		} else {
 
-			if(!empty($this->errors)) return false;
-
-			//check if file has been carefully uploaded
-			if(empty($this->usr_pic) || empty($this->tmp_path)) {
-				
-				$this->errors[] = "The file was not available";
-				return false;
-			}
-
-			$target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_dir . DS . $this->usr_pic;
-
-			//check if the file already existed
-			if (file_exists($target_path)) {
-
-				$this->errors[] = "The file {$this->usr_pic} already exists";
-				return false;
-			}
-
-			//moving file from tmp_path to target_path
-			if(move_uploaded_file($this->tmp_path, $target_path)) {
-
-				if($this->create()) {
-
-					unset($this->tmp_path);
-					return true;
-				}
-
-			} else {
-
-				$this->errors[] = "Permission could be denied";
-				return false;
-			}
-
+			$this->errors[] = "Permission could be denied";
+			return false;
 		}
+
 	} //End of save func
 
 } //End of User class
