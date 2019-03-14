@@ -13,12 +13,29 @@
 
 
 -- Dumping database structure for gallery
-DROP DATABASE IF EXISTS `gallery`;
 CREATE DATABASE IF NOT EXISTS `gallery` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `gallery`;
 
+-- Dumping structure for table gallery.comments
+CREATE TABLE IF NOT EXISTS `comments` (
+  `cmt_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cmt_photo` int(10) unsigned NOT NULL,
+  `cmt_user` int(10) unsigned NOT NULL,
+  `cmt_body` varchar(255) NOT NULL,
+  `cmt_dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cmt_id`),
+  KEY `photo id` (`cmt_photo`),
+  KEY `user id` (`cmt_user`),
+  CONSTRAINT `photo id` FOREIGN KEY (`cmt_photo`) REFERENCES `photos` (`pht_id`),
+  CONSTRAINT `user id` FOREIGN KEY (`cmt_user`) REFERENCES `users` (`usr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='table for photo comments';
+
+-- Dumping data for table gallery.comments: ~0 rows (approximately)
+DELETE FROM `comments`;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+
 -- Dumping structure for table gallery.photos
-DROP TABLE IF EXISTS `photos`;
 CREATE TABLE IF NOT EXISTS `photos` (
   `pht_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pht_title` varchar(50) NOT NULL,
@@ -43,7 +60,6 @@ INSERT INTO `photos` (`pht_id`, `pht_title`, `pht_caption`, `pht_alternatetext`,
 /*!40000 ALTER TABLE `photos` ENABLE KEYS */;
 
 -- Dumping structure for table gallery.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `usr_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `usr_username` varchar(50) NOT NULL,
@@ -54,12 +70,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`usr_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COMMENT='users table';
 
--- Dumping data for table gallery.users: ~1 rows (approximately)
+-- Dumping data for table gallery.users: ~0 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`usr_id`, `usr_username`, `usr_password`, `usr_firstname`, `usr_lastname`, `usr_pic`) VALUES
-	(1, 'vano20', 'Rahasia', 'savano', 'miatama', 'images-3.jpg'),
-	(13, 'pc_pic', 'pcpic', 'pc', 'picture', 'images-14 copy.jpg');
+	(1, 'vano20', 'Rahasia', 'savano', 'miatama', 'images-20.jpg');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
