@@ -18,18 +18,14 @@ if(isset($_POST['update'])){
         $user->usr_lastname = $_POST['usr_lastname'];
         $user->usr_password = isset($_POST['usr_password']) && $_POST['usr_password'] != "" ? $_POST['usr_password'] : $user->usr_password ;
 
-        $user->set_file($_FILES['usr_pic']);
-
-        if($user->usr_id){
-          
-          $user->save_user();
-          $user->update();
-
+        if(empty($_FILES['usr_pic'])) {
+            
+            $user->save();
         } else {
 
-          $user->save_user();
-          $user->create();
-
+            $user->set_file($_FILES['usr_pic']);
+            $user->upload_photo();
+            $user->save();
         }
 
         redirect("edit_user.php?id={$user->usr_id}");
