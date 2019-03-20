@@ -6,7 +6,7 @@
 *  absolute path = dir path
 **/
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR); //dir separator, win = \, unix = /
-defined('SITE_ROOT') ? null : define('SITE_ROOT', 'E:' . DS . 'xampp' . DS . 'htdocs' . DS . 'gallery'); //absolute path of site root
+defined('SITE_ROOT') ? null : define('SITE_ROOT', 'F:' . DS . 'xampp' . DS . 'htdocs' . DS . 'gallery'); //absolute path of site root
 defined('INC_PATH') ? null : define('INC_PATH', SITE_ROOT . DS . 'admin' . DS . 'includes'); //includes file path
 
 //required classes

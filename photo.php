@@ -27,12 +27,12 @@ $comments = Comment::find_comment($photo->pht_id);
 ?>
         <div class="row">
             <!-- Blog Post Content Column -->
-            <div class="col-lg-8">
+            <div class="col-lg-12">
 
                 <!-- Blog Post -->
 
                 <!-- Title -->
-                <h1>Blog Post Title</h1>
+                <h1><?=$photo->pht_title?></h1>
 
                 <!-- Author -->
                 <p class="lead">
@@ -42,7 +42,7 @@ $comments = Comment::find_comment($photo->pht_id);
                 <hr>
 
                 <!-- Date/Time -->
-                <p><span class="glyphicon glyphicon-time"></span> Posted on <?=$photo->pht_dateadded?></p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on <?=date('F d, \a\t H:i A',strtotime($photo->pht_dateadded))?></p>
 
                 <hr>
 
@@ -52,7 +52,8 @@ $comments = Comment::find_comment($photo->pht_id);
                 <hr>
 
                 <!-- Post Content -->
-                <p class="lead"><?=$photo->pht_description?></p>
+                <p class="lead"><?=$photo->pht_caption?></p>
+                <p><?=$photo->pht_description?></p>
 
                 <hr>
 
@@ -94,13 +95,13 @@ $comments = Comment::find_comment($photo->pht_id);
                 } ?>
 
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
 
             
-                 <?php include("includes/sidebar.php"); ?>
+                 <?php //include("includes/sidebar.php"); ?>
 
 
-            </div>
+            </div> -->
 
 
         </div>
