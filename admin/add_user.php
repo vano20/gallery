@@ -16,8 +16,8 @@ if(isset($_POST['create'])){
         $user->usr_password = $_POST['usr_password'];
 
         $user->set_file($_FILES['usr_pic']);
-
-        $user->save_user();
+        $user->upload_photo();
+        $user->save();
     }
 
 

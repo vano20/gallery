@@ -4,14 +4,24 @@ class Session {
 
 	private $signed_in = false;
 	public  $user_id;
-	public $message;
+	public  $message;
+	public  $count;
 
 	function __construct() {
 
 		//starting session on inits
 		session_start();
+		$this->visitor_count();
 		$this->check_login();
 		$this->check_message();
+	}
+
+	public function visitor_count() {
+
+		if(isset($_SESSION['count'])) 
+			return $this->count = $_SESSION['count']++;
+		else
+			return $_SESSION['count'] = 1;
 	}
 
 	public function message($string="") {

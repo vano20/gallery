@@ -22,6 +22,7 @@ class Comment extends Db_object {
 			$comment->cmt_photo = (int)$cmt_photo;
 			$comment->cmt_user = $cmt_user;
 			$comment->cmt_body = $cmt_body;
+			$comment->cmt_dateadded = date("Y-m-d H:i:s");
 
 			return $comment;
 		} else 
@@ -29,7 +30,7 @@ class Comment extends Db_object {
 
 	}
 
-	public static function find_comment($cmt_photo="") {
+	public static function find_comment($cmt_photo=1) {
 
 		global $database;
 

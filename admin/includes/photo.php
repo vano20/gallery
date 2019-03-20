@@ -6,7 +6,7 @@
 class Photo extends Db_object {
 	
 	protected static $db_table = "photos";
-	protected static $db_table_fields = array('pht_title','pht_description','pht_filename','pht_type','pht_size','pht_caption','pht_alternatetext');
+	protected static $db_table_fields = array('pht_title','pht_description','pht_filename','pht_type','pht_size','pht_caption','pht_alternatetext','pht_dateadded');
 	protected static $pk_field = "pht_id";
 
 	public $pht_id;
@@ -17,6 +17,7 @@ class Photo extends Db_object {
 	public $pht_filename;
 	public $pht_type;
 	public $pht_size;
+	public $pht_dateadded;
 
 	public $tmp_path;
 	public $upload_dir = "images";
@@ -55,6 +56,7 @@ class Photo extends Db_object {
 			$this->tmp_path = $file['tmp_name'];
 			$this->pht_type = $file['type'];
 			$this->pht_size = $file['size'];
+			$this->pht_dateadded = date("Y-m-d H:i:s");
 
 		}
 

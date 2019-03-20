@@ -17,6 +17,7 @@ require_once(INC_PATH.DS."db_object.php"); //database connection
 require_once(INC_PATH.DS."user.php"); //user pdo
 require_once(INC_PATH.DS."photo.php"); //photo pdo
 require_once(INC_PATH.DS."session.php"); //user pdo
+require_once(INC_PATH.DS."comment.php"); //user pdo
 
 
 

@@ -153,6 +153,18 @@ class Db_object {
 		
 	}
 
+	public static function count_all() {
+
+		global $database;
+
+		$sql        = "SELECT COUNT(*) FROM " . static::$db_table;
+		$result_set = $database->query_db($sql);
+		$row        = $result_set->fetch_array();
+
+		return array_shift($row);
+
+	}
+
 }
 
 
