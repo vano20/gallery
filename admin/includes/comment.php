@@ -3,7 +3,7 @@
 class Comment extends Db_object {
 
 	protected static $db_table = "comments";
-	protected static $db_table_fields = array('cmt_id','cmt_photo','cmt_user','cmt_body','cmt_dateadded');
+	protected static $db_table_fields = array('cmt_photo','cmt_user','cmt_body','cmt_dateadded');
 	protected static $pk_field = "cmt_id";
 
 	public $cmt_id;
@@ -12,11 +12,11 @@ class Comment extends Db_object {
 	public $cmt_body;
 	public $cmt_dateadded;
 
-	
+
 	public static function create_comment($cmt_photo,$cmt_user=1,$cmt_body="") {
 
 		if(!empty($cmt_photo) && !empty($cmt_user) && !empty($cmt_body)) {
-			
+
 			$comment = new Comment();
 
 			$comment->cmt_photo = (int)$cmt_photo;
@@ -25,7 +25,7 @@ class Comment extends Db_object {
 			$comment->cmt_dateadded = date("Y-m-d H:i:s");
 
 			return $comment;
-		} else 
+		} else
 			return false;
 
 	}

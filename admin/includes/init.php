@@ -1,13 +1,22 @@
-<?php 
+<?php
 
 
 
 /**
 *  absolute path = dir path
 **/
-defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR); //dir separator, win = \, unix = /
-defined('SITE_ROOT') ? null : define('SITE_ROOT', 'E:' . DS . 'xampp' . DS . 'htdocs' . DS . 'gallery'); //absolute path of site root
-defined('INC_PATH') ? null : define('INC_PATH', SITE_ROOT . DS . 'admin' . DS . 'includes'); //includes file path
+//dir separator, win = \, unix = /
+defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
+
+//absolute path of site root for Win
+// defined('SITE_ROOT') ? null : define('SITE_ROOT', 'E:' . DS . 'xampp' . DS . 'htdocs' . DS . 'gallery');
+
+//absolute path of site root
+defined('SITE_ROOT') ? null : define('SITE_ROOT', DS . 'var' . DS . 'www' . DS . 'html' . DS . 'gallery');
+
+//includes file path
+// defined('INC_PATH') ? null : define('INC_PATH', SITE_ROOT . DS . 'admin' . DS . 'includes');
+defined('INC_PATH') ? null : define('INC_PATH', __DIR__);
 
 //required classes
 require_once(INC_PATH.DS."functions.php");

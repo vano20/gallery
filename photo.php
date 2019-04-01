@@ -15,7 +15,7 @@ if(isset($_POST['submit'])) {
 
     $new_comment = Comment::create_comment($photo->pht_id,$cmt_user,$cmt_body);
 
-    if($new_comment && $new_comment->save()) 
+    if($new_comment && $new_comment->save())
         redirect("photo.php?id={$photo->pht_id}");
     else
         $message = "There was some on error on the server";
@@ -77,7 +77,7 @@ $comments = Comment::find_comment($photo->pht_id);
 
                 <!-- Posted Comments -->
                 <?php if($comments) {
-                foreach ($comments as $value) : 
+                foreach ($comments as $value) :
                     $user = User::find_by_id($value->cmt_user); ?>
                 <!-- Comment -->
                 <div class="media">
@@ -97,7 +97,7 @@ $comments = Comment::find_comment($photo->pht_id);
             </div>
             <!-- <div class="col-md-4">
 
-            
+
                  <?php //include("includes/sidebar.php"); ?>
 
 

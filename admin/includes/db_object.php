@@ -1,14 +1,14 @@
 <?php
 
 /** Database object for inheritaing methods
- *  
+ *
  */
 class Db_object {
 
-	
+
 	//query all from table users
 	public static function find_all() {
-		
+
 		return static::find_by_query("SELECT * FROM " . static::$db_table);
 	}
 
@@ -36,7 +36,7 @@ class Db_object {
 	}
 
 	public static function instance($data) {
-		
+
 		$all_class = get_called_class();
 
 		$user_ob = new $all_class;
@@ -81,7 +81,7 @@ class Db_object {
 		$clean_properties = array();
 
 		foreach ($this->properties() as $key => $value) {
-			
+
 			$clean_properties[$key] = $database->escape_string_query($value);
 		}
 
@@ -150,7 +150,7 @@ class Db_object {
 		$database->query_db($delete_query);
 
 		return $database->mysql_ob->affected_rows == 1 ? true : false;
-		
+
 	}
 
 	public static function count_all() {
